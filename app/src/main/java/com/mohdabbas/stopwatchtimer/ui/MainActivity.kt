@@ -1,11 +1,10 @@
-package com.mohdabbas.stopwatchtimer
+package com.mohdabbas.stopwatchtimer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mohdabbas.stopwatchtimer.databinding.ActivityMainBinding
-import com.mohdabbas.stopwatchtimer.ui.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
