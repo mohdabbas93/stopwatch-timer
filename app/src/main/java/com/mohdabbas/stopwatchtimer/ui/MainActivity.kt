@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTabLayout() {
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
-            tab.text = "Tab ${position + 1}"
+            tab.text = resources.getString(tabFragments.getTabFragment(position).textResId)
         }.attach()
     }
 
