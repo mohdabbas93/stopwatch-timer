@@ -3,6 +3,7 @@ package com.mohdabbas.stopwatchtimer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mohdabbas.stopwatchtimer.databinding.ActivityMainBinding
 import com.mohdabbas.stopwatchtimer.ui.ViewPagerAdapter
 
@@ -17,11 +18,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViewPager()
+        setupTabLayout()
     }
 
     private fun setupViewPager() {
         viewPager = binding.viewPager
         viewPager.adapter = ViewPagerAdapter(this)
+    }
+
+    private fun setupTabLayout() {
+        TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
+            tab.text = "Tab ${position + 1}"
+        }.attach()
     }
 
     override fun onBackPressed() {
