@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Stopwatch Timer</string>
+    <string name="stopwatch_tab_text">Stopwatch</string>
+    <string name="timer_tab_text">Timer</string>
 </resources>
