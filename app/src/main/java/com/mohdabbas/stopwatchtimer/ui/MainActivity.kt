@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.mohdabbas.stopwatchtimer.R
+import com.mohdabbas.stopwatchtimer.TabFragment
+import com.mohdabbas.stopwatchtimer.Utils.getTabFragment
 import com.mohdabbas.stopwatchtimer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +23,15 @@ class MainActivity : AppCompatActivity() {
         setupTabLayout()
     }
 
+    private val tabFragments =
+        listOf(
+            TabFragment(StopwatchFragment(), R.string.stopwatch_tab_text),
+            TabFragment(TimerFragment(), R.string.timer_tab_text)
+        )
+
     private fun setupViewPager() {
         viewPager = binding.viewPager
-        viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.adapter = ViewPagerAdapter(this, tabFragments)
     }
 
     private fun setupTabLayout() {
