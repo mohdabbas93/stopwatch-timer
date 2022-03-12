@@ -41,7 +41,6 @@ class TimerFragment : Fragment() {
         if (!isTimerStarted) {
             isTimerStarted = true
             updateStartCancelButtonText(R.string.cancel)
-
             initializeAndStartCountDownTimer(totalTimeInMillis)
         } else {
             isTimerStarted = false
@@ -56,12 +55,12 @@ class TimerFragment : Fragment() {
     private fun onPauseResumeButtonClicked() {
         if (isTimerPaused) {
             isTimerPaused = false
-            binding?.pauseResumeButton?.text = getString(R.string.pause)
+            updatePauseResumeButtonText(R.string.pause)
             initializeAndStartCountDownTimer(remainingMilliseconds)
         } else {
             isTimerPaused = true
             countDownTimer.cancel()
-            binding?.pauseResumeButton?.text = getString(R.string.resume)
+            updatePauseResumeButtonText(R.string.resume)
         }
     }
 
@@ -89,6 +88,10 @@ class TimerFragment : Fragment() {
 
     private fun updateStartCancelButtonText(textResId: Int) {
         binding?.startCancelButton?.updateButtonText(textResId)
+    }
+
+    private fun updatePauseResumeButtonText(textResId: Int) {
+        binding?.pauseResumeButton?.updateButtonText(textResId)
     }
 
     private fun Button.updateButtonText(textResId: Int) {
