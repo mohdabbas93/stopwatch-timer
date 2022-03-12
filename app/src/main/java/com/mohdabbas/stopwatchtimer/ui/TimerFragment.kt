@@ -41,16 +41,7 @@ class TimerFragment : Fragment() {
             isTimerStarted = true
             binding?.startCancelButton?.text = getString(R.string.cancel)
 
-            countDownTimer = object : CountDownTimer(totalTimeInMillis, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    remainingMilliseconds = millisUntilFinished
-                    binding?.timerText?.text = getTimeText(millisUntilFinished)
-                }
-
-                override fun onFinish() {
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
-                }
-            }.apply { start() }
+            initializeAndStartCountDownTimer(totalTimeInMillis)
         } else {
             isTimerStarted = false
             countDownTimer.cancel()
@@ -65,21 +56,25 @@ class TimerFragment : Fragment() {
         if (isTimerPaused) {
             isTimerPaused = false
             binding?.pauseResumeButton?.text = getString(R.string.pause)
-            countDownTimer = object : CountDownTimer(remainingMilliseconds, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    remainingMilliseconds = millisUntilFinished
-                    binding?.timerText?.text = getTimeText(millisUntilFinished)
-                }
-
-                override fun onFinish() {
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
-                }
-            }.apply { start() }
+            initializeAndStartCountDownTimer(remainingMilliseconds)
         } else {
             isTimerPaused = true
             countDownTimer.cancel()
             binding?.pauseResumeButton?.text = getString(R.string.resume)
         }
+    }
+
+    private fun initializeAndStartCountDownTimer(timeInMillis: Long) {
+        countDownTimer = object : CountDownTimer(timeInMillis, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                remainingMilliseconds = millisUntilFinished
+                binding?.timerText?.text = getTimeText(millisUntilFinished)
+            }
+
+            override fun onFinish() {
+                Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+            }
+        }.apply { start() }
     }
 
     private fun getTimeText(time: Long): String {
