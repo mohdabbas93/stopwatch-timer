@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.mohdabbas.stopwatchtimer.R
 import com.mohdabbas.stopwatchtimer.databinding.FragmentTimerBinding
 import java.util.concurrent.TimeUnit
 
@@ -30,16 +31,29 @@ class TimerFragment : Fragment() {
         startCancelButton.setOnClickListener { onStartCancelClicked(totalTimeInMillis) }
     }
 
-    private fun onStartCancelClicked(totalTimeInMillis: Long) {
-        object : CountDownTimer(totalTimeInMillis, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                binding?.timerText?.text = getTimeText(millisUntilFinished)
-            }
+    private var isTimerStarted = false
+    private lateinit var countDownTimer: CountDownTimer
 
-            override fun onFinish() {
-                Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
-            }
-        }.start()
+    private fun onStartCancelClicked(totalTimeInMillis: Long) {
+        if (!isTimerStarted) {
+            isTimerStarted = true
+            binding?.startCancelButton?.text = getString(R.string.cancel)
+
+            countDownTimer = object : CountDownTimer(totalTimeInMillis, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding?.timerText?.text = getTimeText(millisUntilFinished)
+                }
+
+                override fun onFinish() {
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+                }
+            }.apply { start() }
+        } else {
+            isTimerStarted = false
+            countDownTimer.cancel()
+            binding?.startCancelButton?.text = getString(R.string.start)
+            binding?.timerText?.text = getTimeText(totalTimeInMillis)
+        }
     }
 
     private fun getTimeText(time: Long): String {
