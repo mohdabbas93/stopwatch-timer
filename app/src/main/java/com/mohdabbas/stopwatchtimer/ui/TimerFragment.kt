@@ -85,6 +85,10 @@ class TimerFragment : Fragment() {
 
             override fun onFinish() {
                 Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+                isTimerStarted = false
+                updateStartCancelButtonText(R.string.start)
+                updatePauseResumeButtonText(R.string.pause)
+                hidePauseResumeButton()
             }
         }.apply { start() }
     }
