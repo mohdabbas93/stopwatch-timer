@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mohdabbas.stopwatchtimer.R
@@ -39,13 +40,13 @@ class TimerFragment : Fragment() {
     private fun onStartCancelClicked(totalTimeInMillis: Long) {
         if (!isTimerStarted) {
             isTimerStarted = true
-            binding?.startCancelButton?.text = getString(R.string.cancel)
+            updateStartCancelButtonText(R.string.cancel)
 
             initializeAndStartCountDownTimer(totalTimeInMillis)
         } else {
             isTimerStarted = false
             countDownTimer.cancel()
-            binding?.startCancelButton?.text = getString(R.string.start)
+            updateStartCancelButtonText(R.string.start)
             binding?.timerText?.text = getTimeText(totalTimeInMillis)
         }
     }
@@ -84,6 +85,14 @@ class TimerFragment : Fragment() {
             TimeUnit.MILLISECONDS.toMinutes(time),
             TimeUnit.MILLISECONDS.toSeconds(time)
         )
+    }
+
+    private fun updateStartCancelButtonText(textResId: Int) {
+        binding?.startCancelButton?.updateButtonText(textResId)
+    }
+
+    private fun Button.updateButtonText(textResId: Int) {
+        text = getString(textResId)
     }
 
     override fun onDestroyView() {
